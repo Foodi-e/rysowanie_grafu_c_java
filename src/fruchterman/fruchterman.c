@@ -28,6 +28,7 @@ void fruchterman(Graph * g, Config * c){
     for(int i=0; (i<c->iterations) || (temp - 0.00001 < 0.0); i++){
         loop(g, c, k, va, &temp);
     }
+    free(va);
 }
 
 void loop(Graph * g, Config * c, double k, vec2 * va, double * temp){
