@@ -1,3 +1,6 @@
+#ifndef GRAPH_H
+#define GRAPH_H
+
 #include <stdbool.h>
 
 typedef struct Edge {
@@ -13,3 +16,10 @@ typedef struct {
     int degree;
     bool is_fixed;         
 } Vertex;
+
+typedef struct {
+    Vertex* vertices;
+    int num_vertices;
+} Graph;
+
+#endif
