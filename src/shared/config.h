@@ -1,3 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
 #include <stdbool.h>
 
 typedef struct {
@@ -21,3 +24,5 @@ typedef struct {
         H_DEG = 1 //highest degree
     };
 } Config;
+
+#endif
