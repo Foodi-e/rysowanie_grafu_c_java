@@ -1,5 +1,6 @@
 #include "tutte.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #ifndef M_PI
