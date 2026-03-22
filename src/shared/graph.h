@@ -2,24 +2,26 @@
 #define GRAPH_H
 
 #include <stdbool.h>
-
-typedef struct Edge {
-    int target_id;      
-    double weight;      
-    struct Edge* next;  
+typedef struct {
+    char name[256];
+    int u;         
+    int v;         
+    double weight; 
 } Edge;
 
 typedef struct {
-    int id;             
-    double x, y;         
-    Edge* neighbors;    
-    int degree;
-    bool is_fixed;         
-} Vertex;
+    int id;
+    double x, y;
+    int degree;    
+    bool is_fixed;
+} Node;
 
 typedef struct {
-    Vertex* vertices;
-    int num_vertices;
+    Node* nodes;
+    int num_nodes;
+    
+    Edge* edges;   
+    int num_edges;
 } Graph;
 
 #endif
