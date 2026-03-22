@@ -12,7 +12,7 @@ typedef struct{
 
 void loop(Graph * g, Config * c, double k, vec2 * va, double * temp);
 
-void Fruchterman(Graph * g, Config * c){
+void fruchterman(Graph * g, Config * c){
     srand( time( NULL ) );
 
     double temp = c->temp;
