@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -10,8 +11,17 @@
 static int find_highest_degree_unfixed(Graph* graph);
 static void setup_boundary(Graph* graph, Config* config);
 static void solve_linear_system(double* M, double* b, int n);
+static bool is_graph_connected_to_boundary(Graph* graph); 
 
 void run_tutte_embedding(Graph* graph, Config* config) {
+    if (graph->num_nodes < 3) {
+        printf("Błąd: graf musi mieć conajmniej 3 wierzchołki\n");
+        return;
+    }
+    if (config->k_fixed < 3) {
+        printf("Błąd: Tutte wymaga conajmniej 3 stałe wierzchołki\n");
+        return;
+    }
     //ustawianie na początek wszystkie wierzchołki na pewno nie są ramką
     for (int i = 0; i < graph->num_nodes; i++) {
         graph->nodes[i].is_fixed = false;
@@ -19,6 +29,12 @@ void run_tutte_embedding(Graph* graph, Config* config) {
 
     //wyznaczanie ktore wierzchołki są ramką
     setup_boundary(graph, config);
+
+    if (!is_graph_connected_to_boundary(graph)) {
+        printf("Błąd: Graf jest niespójny! Część wierzchołków lewituje w przestrzeni\n");
+        printf("Przerwano algorytm Tuttego, aby zapobiec dzieleniu przez zero w macierzy\n");
+        return;
+    }
 
     int num_internal = 0; // ilość wierzchołkow ktore nie są stałe
 
@@ -223,4 +239,53 @@ static void solve_linear_system(double* M, double* b, int n){
             b[i] -= M[cell_idx] * b[j]; 
         }
     }
+}
+
+// Sprawdza czy każdy wierzchołek ma ścieżkę do ramki (boundary)
+static bool is_graph_connected_to_boundary(Graph* graph) {
+    bool* visited = calloc(graph->num_nodes, sizeof(bool));
+    int visited_count = 0;
+
+    // zaznaczamy wszystkie stałe wierzchołki (ramkę) jako odwiedzone(pomalowane)
+    for (int i = 0; i < graph->num_nodes; i++) {
+        if (graph->nodes[i].is_fixed) {
+            visited[i] = true;
+            visited_count++;
+        }
+    }
+
+    // jeśli nie ma ramki, z automatu nie możemy kontynuować
+    if (visited_count == 0) {
+        free(visited);
+        return false;
+    }
+
+    // rozprzestrzeniamy "farbę" po krawędziach
+    bool changed;
+    do {
+        changed = false;
+        for (int i = 0; i < graph->num_edges; i++) {
+            int u = graph->edges[i].u;
+            int v = graph->edges[i].v;
+
+            // jeśli u jest połączony z ramką, a v jeszcze nie - "pomaluj" v
+            if (visited[u] && !visited[v]) {
+                visited[v] = true;
+                visited_count++;
+                changed = true;
+            } 
+            // w drugą stronę, jeśli v jest połączony, a u nie - "pomaluj" u
+            else if (visited[v] && !visited[u]) {
+                visited[u] = true;
+                visited_count++;
+                changed = true;
+            }
+        }
+    } while (changed);
+
+    // jeśli liczba pomalowanych wierzchołków równa się wszystkim, graf jest spójny
+    bool is_connected = (visited_count == graph->num_nodes);
+    free(visited);
+    
+    return is_connected;
 }
