@@ -139,7 +139,7 @@ Graph * load_from_file(FILE * fptr){
         element_four[0] = '\0';
     }
     g->edges = realloc(g->edges, g->num_edges*sizeof(Edge));
-    g->nodes = realloc(g->nodes, g->num_nodes*sizeof(Edge));
+    g->nodes = realloc(g->nodes, g->num_nodes*sizeof(Node));
     return g;
 }
 
