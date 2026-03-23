@@ -29,7 +29,7 @@ void add_degree(Graph * g, int * max_size_n){
         g->nodes[g->num_nodes].id = g->edges[g->num_edges].u;
         g->edges[g->num_edges].u = g->num_nodes;
         g->num_nodes+=1;
-        if(g->num_edges >= *max_size_n){
+        if(g->num_nodes >= *max_size_n){
             *max_size_n = (*max_size_n) *2;
             g->nodes = realloc(g->nodes, (*max_size_n)*sizeof(Node));
         }
@@ -40,7 +40,7 @@ void add_degree(Graph * g, int * max_size_n){
         g->nodes[g->num_nodes].id = g->edges[g->num_edges].v;
         g->edges[g->num_edges].v = g->num_nodes;
         g->num_nodes+=1;
-        if(g->num_edges >= *max_size_n){
+        if(g->num_nodes >= *max_size_n){
             *max_size_n = (*max_size_n) *2;
             g->nodes = realloc(g->nodes, (*max_size_n)*sizeof(Node));
         }
