@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graph.h"
-
+#include "../graph.h"
 // definiujemy pewne wielkosci
 // MAks Dlugosc jednej lini
 // dlugosc elementu - element to jedna z 4 czesci inputu (nazwa, id, id, waga)
