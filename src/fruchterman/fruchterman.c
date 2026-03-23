@@ -17,7 +17,7 @@ void fruchterman(Graph * g, Config * c){
 
     double temp = c->temp;
     //losujemy pozycje poczatkowe wierzcholkow
-    for(int i=0;(i<g->num_nodes) || (temp - 0.0001 < 0); i++){
+    for(int i=0;i<g->num_nodes; i++){
         g->nodes[i].x = (rand()/(RAND_MAX+1.0)) * c->width;
         g->nodes[i].y = (rand()/(RAND_MAX+1.0)) * c->height;
     }
