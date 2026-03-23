@@ -63,11 +63,11 @@ void loop(Graph * g, Config * c, double k, vec2 * va, double * temp){
         force.x = (force.x / length) * (g->edges[i].weight * length*length) / k;
         force.y = (force.y / length) * (g->edges[i].weight * length*length) / k;
 
-        g->nodes[g->edges[i].u].x -= force.x;
-        g->nodes[g->edges[i].u].y -= force.y;
+        va[g->edges[i].u].x -= force.x;
+        va[g->edges[i].u].y -= force.y;
 
-        g->nodes[g->edges[i].v].x += force.x;
-        g->nodes[g->edges[i].v].y += force.y;
+        va[g->edges[i].v].x += force.x;
+        va[g->edges[i].v].y += force.y;
     }
     //przesuwamy
     for(int i = 0; i<g->num_nodes; i++){
