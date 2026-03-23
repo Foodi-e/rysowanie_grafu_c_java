@@ -58,7 +58,7 @@ Graph * load_from_file(FILE * fptr){
     Graph * g = malloc(sizeof(Graph));
     g->num_nodes = 0;
     g->num_edges = 0;
-    g->nodes = malloc(sizeof(Node)*max_size_n);
+    g->nodes = calloc(sizeof(Node)*max_size_n);
     g->edges = malloc(sizeof(Edge)*max_size_e);
     
     printf("petla start\n");
