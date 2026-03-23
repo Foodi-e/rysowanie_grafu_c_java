@@ -34,7 +34,7 @@ void fruchterman(Graph * g, Config * c){
 void loop(Graph * g, Config * c, double k, vec2 * va, double * temp){
     //Liczymy sily odpychu
     for(int i=0; i<g->num_nodes; i++){
-        for(int j=0; i<g->num_nodes-i-1; j++){
+        for(int j=0; j<g->num_nodes-i-1; j++){
             vec2 force = (vec2){0,0};
             double length;
             force.x = g->nodes[i].x - g->nodes[j+i+1].x;
