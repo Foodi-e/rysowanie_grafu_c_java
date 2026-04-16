@@ -229,13 +229,9 @@ static void solve_linear_system(double* M, double* b, int n){
         }
     }
 
-    // Back substitution
     for (int i = n - 1; i >= 0; i--) {
         for (int j = i + 1; j < n; j++) {
-            
-            int cell_idx = i * n + j; // Row i, Column j
-            
-            // Subtract (Known Variable * Its Multiplier) from our right-side 'b'
+            int cell_idx = i * n + j; 
             b[i] -= M[cell_idx] * b[j]; 
         }
     }

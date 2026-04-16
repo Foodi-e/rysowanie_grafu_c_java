@@ -58,15 +58,15 @@ Graph * load_from_file(FILE * fptr){
     Graph * g = malloc(sizeof(Graph));
     g->num_nodes = 0;
     g->num_edges = 0;
-    g->nodes = calloc(sizeof(Node)*max_size_n);
+    g->nodes = calloc(max_size_n, sizeof(Node));
     g->edges = malloc(sizeof(Edge)*max_size_e);
     
-    printf("petla start\n");
+    
 
     //tworzmy format dla scanf - %255s %255s %255s %255s - zeby przez przypadek nie wyszedl poza granice zmiennych podczas zczytywania
     char format[32];
     snprintf(format,sizeof(format), "%%%ds %%%ds %%%ds %%%ds", EL_S - 1,EL_S - 1,EL_S - 1,EL_S - 1);
-
+    printf("petla start\n");
     //standardowa petla z fgetsem
     while(fgets(buffer,LINE_S,fptr)!=NULL){
         //TUTAJ TRZEBA DODAC TO UNIKALNE ID KRAWEDZI CO TY CHCIALES IMO ZBYT DUZO ROBOTY
@@ -76,7 +76,7 @@ Graph * load_from_file(FILE * fptr){
         char element_two[EL_S];
         char element_three[EL_S];
         char element_four[EL_S];
-        printf("poczatek petli");
+        //printf("poczatek petli");
         //szczytujemy elementy z linii
         int n_el = sscanf(buffer,format, element_one, element_two, element_three, element_four);
         //printf("\n nel %d %s %s %s %s \n", n_el,element_one, element_two, element_three, element_four);
