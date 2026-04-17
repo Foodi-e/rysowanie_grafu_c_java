@@ -203,7 +203,7 @@ static void solve_linear_system(double* M, double* b, int n){
     for (int k = 0; k < n; k++) {
         int pivot_idx = k * n + k; //wiersz K, kolumna K
         double pivot = M[pivot_idx]; //liczba na przekątnej macierzy
-        
+        if (fabs(pivot) < 1e-9) printf("\nzero\n");
         // dzielnie całego wierszu macierzy przez pivot 
         for (int j = k; j < n; j++) {
             int current_idx = k * n + j; // wiersz K, kolumna J
@@ -229,13 +229,10 @@ static void solve_linear_system(double* M, double* b, int n){
         }
     }
 
-    // Back substitution
+
     for (int i = n - 1; i >= 0; i--) {
-        for (int j = i + 1; j < n; j++) {
-            
-            int cell_idx = i * n + j; // Row i, Column j
-            
-            // Subtract (Known Variable * Its Multiplier) from our right-side 'b'
+        for (int j = i + 1; j < n; j++) {     
+            int cell_idx = i * n + j;
             b[i] -= M[cell_idx] * b[j]; 
         }
     }
@@ -287,5 +284,9 @@ static bool is_graph_connected_to_boundary(Graph* graph) {
     bool is_connected = (visited_count == graph->num_nodes);
     free(visited);
     
+    if (!is_connected) {
+        printf("DEBUG: Pomalowano %d węzłów, a graph->num_nodes wynosi %d. Mamy węzła-widmo!\n", visited_count, graph->num_nodes);
+    }
+
     return is_connected;
 }

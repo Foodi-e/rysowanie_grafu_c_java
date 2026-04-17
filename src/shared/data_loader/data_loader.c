@@ -11,19 +11,27 @@
 #define INIT_SIZE 128
 
 void add_degree(Graph * g, int * max_size_n){
-    int state = 0; // 3 - both 1- two 2- one 0-neither
+    int state = 0;
+    int raw_u = g->edges[g->num_edges].u;
+    int raw_v = g->edges[g->num_edges].v;
+    
     for(int i =0; (i<g->num_nodes) && (state !=3); i++ ){
-        if(g->nodes[i].id == g->edges[g->num_edges].u){
+        
+        if(g->nodes[i].id == raw_u){ 
             g->nodes[i].degree +=1;
-            g->edges[g->num_edges].u = i;
+            g->edges[g->num_edges].u = i; 
             state+=1;
+            raw_u = -1;
         }
-        if(g->nodes[i].id == g->edges[g->num_edges].v){
+        
+        if(g->nodes[i].id == raw_v){ 
             g->nodes[i].degree +=1;
-            g->edges[g->num_edges].v = i;
+            g->edges[g->num_edges].v = i; 
             state+=2;
+            raw_v = -1;
         }
     }
+    
     if((state == 0) || (state == 2)){
         g->nodes[g->num_nodes].degree +=1;
         g->nodes[g->num_nodes].id = g->edges[g->num_edges].u;
@@ -34,7 +42,6 @@ void add_degree(Graph * g, int * max_size_n){
             g->nodes = realloc(g->nodes, (*max_size_n)*sizeof(Node));
         }
     }
-    //jedyna rzecz ktora sie zmieniea to u -> v
     if((state == 0) || (state == 1)){
         g->nodes[g->num_nodes].degree +=1;
         g->nodes[g->num_nodes].id = g->edges[g->num_edges].v;

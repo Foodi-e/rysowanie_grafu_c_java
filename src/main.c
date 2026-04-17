@@ -32,7 +32,7 @@ void setup_default_config(Config * c){
     
     c->radius = 1.0;
     c->k_fixed = 3;
-    c->selection_mode = CUSTOM;
+    c->selection_mode = H_DEG;
 }
 
 int main(int argc, char ** argv) {
