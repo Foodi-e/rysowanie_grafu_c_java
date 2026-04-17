@@ -18,9 +18,10 @@ typedef struct {
     char *output_path;  // -fout 
     bool use_binary;    // -bin
     enum Algorithm algorithm;
+    
     //FR
     double width, height, temp;
-    int iterations; //nie wiem czy tego będziesz potrzebował, bo chyba nie wspominałeś podczas prezentacji
+    int iterations; 
 
     //tutte
     double radius;

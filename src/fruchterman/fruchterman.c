@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "config.h"
-#include "graph.h"
 #include <math.h>
 #include <time.h>
+
+#include "fruchterman.h"
 
 typedef struct{
     double x;
