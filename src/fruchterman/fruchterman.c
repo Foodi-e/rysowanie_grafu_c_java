@@ -22,10 +22,10 @@ void fruchterman(Graph * g, Config * c){
         g->nodes[i].y = (rand()/(RAND_MAX+1.0)) * c->height;
     }
     // create velocity array
-    vec2 * va = malloc(sizeof(vec2) * g->num_nodes);
+    vec2 * va = calloc(g->num_nodes,sizeof(vec2));
     // stala k
-    double k = sqrt(c->width*c->height /c->iterations);
-    for(int i=0; (i<c->iterations) || (temp - 0.00001 < 0.0); i++){
+    double k = sqrt(c->width*c->height / g->num_nodes);
+    for(int i=0; (i<c->iterations) && (temp > 0.00001); i++){
         loop(g, c, k, va, &temp);
     }
     free(va);
@@ -60,6 +60,9 @@ void loop(Graph * g, Config * c, double k, vec2 * va, double * temp){
         force.x = g->nodes[g->edges[i].u].x - g->nodes[g->edges[i].v].x;
         force.y = g->nodes[g->edges[i].u].y - g->nodes[g->edges[i].v].y;
         length = sqrt(force.x*force.x + force.y*force.y);
+        if(length - 0.00001 < 0){
+            continue;
+        }
         force.x = (force.x / length) * (g->edges[i].weight * length*length) / k;
         force.y = (force.y / length) * (g->edges[i].weight * length*length) / k;
 
